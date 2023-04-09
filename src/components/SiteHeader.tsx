@@ -15,7 +15,7 @@ export default function SiteHeader() {
           </li>
           <li>
           <button className={'bg-brand-green-400 hover:bg-brand-green-500 text-white p-2 rounded-md'}>
-            <Link href="/signup">Get Started</Link>
+            <Link href="/signup">Sign Up</Link>
           </button>
           </li>
         </div>

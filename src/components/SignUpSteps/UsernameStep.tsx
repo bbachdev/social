@@ -12,7 +12,12 @@ enum UsernameState {
   None
 }
 
+interface UsernameAvailableResponse {
+  available: boolean
+}
+
 export default function UsernameStep() {
+  //Form Info
   const [username, setUsername] = useState('')
   const [usernameState, setUsernameState] = useState(UsernameState.None)
   const [email, setEmail] = useState('')
@@ -35,15 +40,29 @@ export default function UsernameStep() {
     }
   
   }, [birthMonth, birthYear])
+
+  //Button-related
+  const [buttonDisabled, setButtonDisabled] = useState(true)
   
+  //Check if button should be disabled
+  useEffect(() => {
+    if(usernameState === UsernameState.Available && email.length > 0) {
+      setButtonDisabled(false)
+    }else{
+      setButtonDisabled(true)
+    }
+  }, [usernameState, email])
 
   async function checkUsername() {
     if(username.length > 0) {
       setUsernameState(UsernameState.Checking)
-      //TODO: Replace with database call
-      setTimeout(() => {
+      const userNameAvailable : UsernameAvailableResponse = await (await fetch(`/api/users/checkUsername?username=${username}`)).json()
+      console.log('Available: '+ userNameAvailable.available)
+      if(userNameAvailable.available) {
         setUsernameState(UsernameState.Available)
-      }, 1000)
+      }else{
+        setUsernameState(UsernameState.Taken)
+      }
     }else{
       setUsernameState(UsernameState.None)
     } 
@@ -55,7 +74,7 @@ export default function UsernameStep() {
     await checkUsername()
     if(usernameState === UsernameState.Available) {
       //Save information to database (TODO) and redirect to next step
-
+      
     }
   }
 
@@ -78,7 +97,7 @@ export default function UsernameStep() {
         
         <div className={'flex flex-col'}>
           <span>Email</span>
-          <input className={'p-2 rounded-md border-2 border-gray-300 bg-gray-100'}/>
+          <input className={'p-2 rounded-md border-2 border-gray-300 bg-gray-100'} type='email' onChange={(e) => setEmail(e.target.value)}/>
         </div>
         
         <div className={'flex flex-col'}>
@@ -106,7 +125,7 @@ export default function UsernameStep() {
       </div>
 
       <div className={'flex flex-row mt-4'}>
-        <button className={' ml-auto bg-brand-green-400 hover:bg-brand-green-500 disabled:bg-gray-400 text-white p-2 rounded-md px-4'} disabled={usernameState !== UsernameState.Available} onClick={submit}>
+        <button className={' ml-auto bg-brand-green-400 hover:bg-brand-green-500 disabled:bg-gray-400 text-white p-2 rounded-md px-4'} disabled={buttonDisabled} onClick={submit}>
           {`Next`}
         </button>
       </div>
