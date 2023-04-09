@@ -44,7 +44,6 @@ export default function UsernameStep() {
   //Button-related
   const [buttonDisabled, setButtonDisabled] = useState(true)
   
-  //Check if button should be disabled
   useEffect(() => {
     if(usernameState === UsernameState.Available && email.length > 0) {
       setButtonDisabled(false)
@@ -53,6 +52,7 @@ export default function UsernameStep() {
     }
   }, [usernameState, email])
 
+  //DB-Related Functions
   async function checkUsername() {
     if(username.length > 0) {
       setUsernameState(UsernameState.Checking)
@@ -80,7 +80,7 @@ export default function UsernameStep() {
 
   return (
     <div className={'shadow-md flex flex-col p-2 px-8 pb-4 bg-white'}>
-      <span className={'text-xl font-thin mx-auto mb-8'}>
+      <span className={'text-3xl font-thin mx-auto mb-10'}>
         {`Welcome! Let's Get Started.`}
       </span>
       <div className={'flex flex-col space-y-8'}>

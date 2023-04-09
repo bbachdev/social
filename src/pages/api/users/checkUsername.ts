@@ -7,16 +7,15 @@ type Data = {
 
 export default async function handler(req : NextApiRequest, res : NextApiResponse<Data>) {
   const { username } = req.query
-  console.log("username: ", username)
   if (typeof username === 'string' || username instanceof String){
     const usernameString = username as string
     try{
-      const matchedUser = await prisma.user.findFirst({
+      const matchedUser = await prisma.user.count({
         where: {
           name: usernameString
         }
       })
-      if(matchedUser){
+      if(matchedUser > 0){
         res.status(200).json({available: false})
       }else{
         res.status(200).json({available: true})
@@ -28,5 +27,5 @@ export default async function handler(req : NextApiRequest, res : NextApiRespons
     }
   }else{
     res.status(404).json({available: false})
-  } 
+  }
 }

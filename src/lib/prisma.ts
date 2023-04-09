@@ -1,3 +1,4 @@
+//Note: Recommended snippet to avoid multiple instances of PrismaClient in development (results in error otherwise).
 import { PrismaClient } from '@prisma/client';
 
 let prisma: PrismaClient;
