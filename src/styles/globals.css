@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Loading spinner */
+@keyframes fill {
+  0% {
+    stroke-dasharray: 1, 251;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 200, 251;
+    stroke-dashoffset: -50;
+  }
+  100% {
+    stroke-dasharray: 1, 251;
+    stroke-dashoffset: -251;
+  }
+}
+
+.fill {
+  animation: fill 2s linear infinite;
+  stroke-dasharray: 1, 251;
+}
+
+/* END Loading spinner */
+
+.wrapPhrase {
+  word-wrap: anywhere;
+}

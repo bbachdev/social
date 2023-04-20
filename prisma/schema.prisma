@@ -40,6 +40,11 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  status        String @default("active")
+  birth_date    DateTime? @db.Date
+  twoFactorStatus String @default("not_setup")
+  twoFactorSecret String?
+  twoFactorMethod String?
   accounts      Account[]
   sessions      Session[]
 }

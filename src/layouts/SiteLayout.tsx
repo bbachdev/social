@@ -1,5 +1,5 @@
-import SiteFooter from "@/components/SiteFooter";
-import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/Nav/SiteFooter";
+import SiteHeader from "@/components/Nav/SiteHeader";
 
 export default function SiteLayout({children} : {children: React.ReactNode}) {
   return (

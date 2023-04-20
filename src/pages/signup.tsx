@@ -1,11 +1,10 @@
+import SignUpModule from '@/components/SignUpModule';
 import UsernameStep from "@/components/SignUpSteps/UsernameStep";
 import SiteLayout from "@/layouts/SiteLayout";
 import Head from "next/head";
 import { useState } from "react";
 
 export default function Signup() {
-  const [step, setStep] = useState(0)
-
   return (
     <>
       <Head>
@@ -15,7 +14,7 @@ export default function Signup() {
       </Head>
       <SiteLayout>
         <main>
-          {step === 0 && <UsernameStep/>}
+          <SignUpModule/>
         </main>
       </SiteLayout>
     </>

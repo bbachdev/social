@@ -6,17 +6,25 @@ type Data = {
 }
 
 export default async function handler(req : NextApiRequest, res : NextApiResponse<Data>) {
-  const { username } = req.query
+  const { userId, username } = req.query
   if (typeof username === 'string' || username instanceof String){
     const usernameString = username as string
     try{
-      const matchedUser = await prisma.user.count({
+      const matchedUser = await prisma.user.findFirst({
         where: {
           name: usernameString
+        },
+        select: {
+          id: true
         }
       })
-      if(matchedUser > 0){
-        res.status(200).json({available: false})
+      if(matchedUser){
+        //If userId matches the matched user, then it's the same user, so allow it
+        if(userId && userId === matchedUser.id){
+          res.status(200).json({available: true})
+        }else{
+          res.status(200).json({available: false})
+        }
       }else{
         res.status(200).json({available: true})
       }
